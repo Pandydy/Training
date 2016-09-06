@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+		h2{
+			margin: 0 auto;
+			width: 1200px;
+		}
+			canvas{
+				/*border: 2px solid black;*/
+				display: block;
+				float: left;
+				margin: 10px 0;
+			}
+			
+			#myCanvas_mouse{
+				transition: all 2s;
+				-webkit-transition: all 2s;
+				-o-transition: all 2s;
+				-moz-transition: all 2s;
+			}
+			#myCanvas_mouse:hover{
+				transform: rotate(360deg);
+				-webkit-transform: rotate(360deg);
+				-o-transform: rotate(360deg);
+				-moz-transform: rotate(360deg);
+			}
+			
+			#myCanvas_auto{
+				animation: myfirst 30s;
+				-moz-animation: myfirst 30s;	
+				-webkit-animation: myfirst 30s;
+				-o-animation: myfirst 30s;
+			}
+			@keyframes myfirst
+			{
+				0% {transform: rotate(-3600deg);}
+			}
+			
+			@-moz-keyframes myfirst
+			{
+				0% {transform: rotate(-3600deg);}
+			}
+			
+			@-webkit-keyframes myfirst
+			{
+				0% {transform: rotate(-3600deg);}
+			}
+			
+			@-o-keyframes myfirst
+			{
+				0% {transform: rotate(-3600deg);}
+			}
+		</style>
+	</head>
+	<body>
+		<h2>*注：图一静止；图二鼠标放上最多转动360度，移出反转回到原位置；图三顺时针自转30秒后停止;图四鼠标按下转动，鼠标抬起停止</h2>
+		<canvas id="myCanvas_static" width="500" height="500"></canvas>
+		<canvas id="myCanvas_mouse" width="500" height="500"></canvas>
+		<canvas id="myCanvas_auto" width="500" height="500"></canvas>
+		<canvas id="myCanvas_control" width="500" height="500"></canvas>
+	
+		<script type="text/javascript">
+			var canvas = document.querySelectorAll("canvas");
+			function taiji (index) {
+				var context = canvas[index].getContext("2d");
+				context.strokeStyle = "black";
+				context.lineWidth = 3;
+				context.beginPath();
+				var angle = Math.PI;
+				//右大半
+				context.arc(250,250,200,angle/2,angle/2*3,true);
+				context.stroke();
+				context.fillStyle = "black";
+				context.fill();
+				//左大半
+				context.beginPath();
+				context.arc(250,250,200,angle/2,angle/2*3,false);
+				context.stroke();
+				//小黑
+				context.beginPath();
+				context.arc(250,349,99,0,angle*2,false);
+				context.fill();
+				//小白
+				context.beginPath();
+				context.arc(250,151,99,0,angle*2,true);
+				context.fillStyle = "white";
+				context.fill();
+				//黑点
+				context.beginPath();
+				context.arc(250,150,10,0,angle*2,true);
+				context.fillStyle = "black";
+				context.fill();
+				//白点
+				context.beginPath();
+				context.arc(250,350,10,0,angle*2,true);
+				context.fillStyle = "white";
+				context.fill();
+			}
+				for(var i = 0 ;i < canvas.length;i++){
+					taiji(i);
+			}
+				
+			var canvas_control = document.querySelector("#myCanvas_control");
+			var context_control = canvas_control.getContext("2d");
+			var timer;
+			canvas_control.onmousedown = function () {
+				timer = setInterval(animation,100);
+			}
+			canvas_control.onmouseup = function () {
+				clearInterval(timer);
+			}
+			function animation() {
+				context_control.translate(250,250);
+				context_control.rotate(Math.PI/7);
+				context_control.translate(-250,-250);
+				context_control.clearRect(0,0,600,600);
+				taiji(3);
+			}
+
+		</script>
+	
+	
+	</body>
+</html>
