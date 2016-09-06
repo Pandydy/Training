@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -109,7 +109,7 @@
 			canvas_control.onmousedown = function () {
 				timer = setInterval(animation,100);
 			}
-			canvas_control.onmouseup = function () {
+			window.onmouseup = function () {
 				clearInterval(timer);
 			}
 			function animation() {
